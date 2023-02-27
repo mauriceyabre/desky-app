@@ -15,10 +15,10 @@
                                 <div class="col-lg-9">
                                     <div class="row g-3">
                                         <div class="col-lg-6">
-                                            <AppInput :form="form" name="first_name" v-model="form.first_name" />
+                                            <InputText :form="form" name="first_name" v-model="form.first_name" />
                                         </div>
                                         <div class="col-lg-6">
-                                            <AppInput :form="form" name="last_name" v-model="form.last_name" />
+                                            <InputText :form="form" name="last_name" v-model="form.last_name" />
                                         </div>
                                     </div>
                                 </div>
@@ -28,8 +28,7 @@
                                     <span class="required">Paese</span>
                                 </label>
                                 <div class="col-lg-9 fv-row fv-plugins-icon-container">
-                                    <InputSelect2 :options="countries" :form="form" name="address.country_code" id="country_code" placeholder="Seleziona un paese..." v-model="form.address.country_code"
-                                            clearable />
+                                    <InputSelect2 :options="countries" :form="form" name="country_code" placeholder="Seleziona un paese..." v-model="form.address.country_code" />
                                 </div>
                             </div>
                             <div class="row mb-6" v-if="form.address.country_code === 'IT'">
@@ -59,7 +58,7 @@
                                     <span>Mansione</span>
                                 </label>
                                 <div class="col-lg-9 fv-row">
-                                    <AppInput :form="form" name="job" type="text" placeholder="es. 3D Artist" v-model="form.job" />
+                                    <InputText :form="form" name="job" placeholder="es. 3D Artist" v-model="form.job" />
                                 </div>
                             </div>
                             <div class="row mb-6">
@@ -67,7 +66,7 @@
                                     <span>Telefono</span>
                                 </label>
                                 <div class="col-lg-9 fv-row">
-                                    <AppInput :form="form" name="phone" type="tel" placeholder="es. 3201234567" v-model="form.phone" />
+                                    <InputTel :form="form" name="phone" placeholder="es. 3201234567" v-model="form.phone" />
                                 </div>
                             </div>
                             <div class="row">
@@ -86,7 +85,7 @@
                                     <span>Codice Fiscale</span>
                                 </label>
                                 <div class="col-lg-9 fv-row">
-                                    <AppInput :form="form" name="tax_id" type="tel" placeholder="es. KTVNGY77T30Y514A" v-model="form.tax_id" />
+                                    <InputText :form="form" name="tax_id" placeholder="es. KTVNGY77T30Y514A" v-model="form.tax_id" />
                                 </div>
                             </div>
                             <div class="row mb-6">
@@ -94,7 +93,7 @@
                                     <span>Partita Iva</span>
                                 </label>
                                 <div class="col-lg-9 fv-row">
-                                    <AppInput :form="form" name="vat_id" type="tel" placeholder="es. IT85458800571" v-model="form.vat_id" />
+                                    <InputText :form="form" name="vat_id" placeholder="es. IT85458800571" v-model="form.vat_id" />
                                 </div>
                             </div>
                             <div class="row mb-6">
@@ -102,7 +101,7 @@
                                     <span>IBAN</span>
                                 </label>
                                 <div class="col-lg-9 fv-row">
-                                    <AppInput :form="form" name="iban" type="tel" placeholder="es. IT29V8096100147J4HK47CRBD59" v-model="form.iban" />
+                                    <InputText :form="form" name="iban" placeholder="es. IT29V8096100147J4HK47CRBD59" v-model="form.iban" />
                                 </div>
                             </div>
                         </div>
@@ -172,10 +171,10 @@
             </div>
         </div>
     </div>
-    <teleport to="body">
+    <div>
         <MemberModalEditEmail :key="'email-form'" :selected_member="user" v-if="isEmailModalOpen" @modal_closed="isEmailModalOpen = false" />
         <MemberModalEditPassword :key="'password-form'" v-if="isPasswordModalOpen" :selected_member="user" @modal_closed="isPasswordModalOpen = false" />
-    </teleport>
+    </div>
 </template>
 <script setup lang="ts">
     import CountryModel from "@Models/Country";
@@ -183,13 +182,13 @@
     import User from "@Models/User";
     import InputSelect2 from "@Components/Inputs/InputSelect2.vue";
     import { useToast } from 'vue-toastification';
-    import AppInput from "@Components/Inputs/InputText.vue";
     import InputDate from "@Components/Inputs/InputDate.vue";
     import InputText from "@Components/Inputs/InputText.vue";
-    import { computed, ref } from "vue";
+    import { computed, ref, watch } from "vue";
     import MemberModalEditPassword from "@Pages/App/Members/Partials/MemberModalEditPassword.vue";
     import MemberModalEditEmail from "@Pages/App/Members/Partials/MemberModalEditEmail.vue";
     import cloneDeep from "lodash/cloneDeep";
+    import InputTel from "@Components/Inputs/InputTel.vue";
 
     interface Props {
         user: User,
@@ -206,7 +205,7 @@
         return props.user;
     })
 
-    const form = useForm('details', {
+    const form = useForm( {
         first_name: user.value.first_name,
         last_name: user.value.last_name,
 
@@ -232,6 +231,15 @@
     })
 
     const initialValues = cloneDeep(form.data())
+
+    watch(() => form.address.country_code, (value, oldValue) => {
+        if (value !== oldValue && value !== 'IT') {
+            form.address.street = ''
+            form.address.postcode = ''
+            form.address.city = ''
+            form.address.province = ''
+        }
+    })
 
     function submitDetails() {
         form

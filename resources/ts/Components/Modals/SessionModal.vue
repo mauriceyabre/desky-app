@@ -4,7 +4,7 @@
             <div class="card-body d-flex flex-column gap-3 gap-lg-6">
                 <div class="d-flex flex-center">
                     <span class="fs-5 fw-normal">
-                        Sessioni: {{ user.todayAttendance?.sessionsCount ?? 0 }}
+                        Sessioni: {{ !!user.todayAttendance ? user.todayAttendance.sessionsCount : 0 }}
                     </span>
                 </div>
                 <div class="row g-3 g-lg-6">

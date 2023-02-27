@@ -19,6 +19,7 @@ declare global {
         Desky: AppCoreHelper
     }
 
+    const _: Lodash
     const Desky: AppCoreHelper
 
     const axios: AxiosInstance
@@ -35,7 +36,7 @@ declare global {
 
     const Swal: typeof Swal2
     const route: typeof ziggyRouteFunction
-    const moment: typeof Moment
+    const moment: Moment
 
     namespace bootstrap {
         const Modal: Modal

@@ -6,7 +6,7 @@
                     <div class="me-7 mb-4">
                         <div class="symbol symbol-100px symbol-lg-160px">
                             <div class="symbol symbol-25px">
-                                <div :class="`symbol-label fs-fluid fw-bold ${isArchived ? 'text-warning bg-light-warning' : 'text-primary bg-light-primary'}`">
+                                <div :class="`symbol-label fs-fluid fw-bold ${isArchived ? 'text-warning bg-light-warning' : 'text-white bg-primary'}`">
                                     <span class="fs-4x fw-normal">{{ user.initials }}</span>
                                 </div>
                             </div>

@@ -1,12 +1,12 @@
 <template>
     <div v-bind="$attrs" ref="select">
         <InputLabel v-if="label" :required="required">{{ label }}</InputLabel>
-            <select :disabled="disabled" :name="computedName" data-control="select2" :id="computedName" :data-placeholder="placeholder" :data-allow-clear="clearable"
-                    class="form-select form-select-solid" :class="(form.errors?.[name]) ? 'is-invalid' : ''" :value="modelValue"
-                    :data-dropdown-parent="modalId" :data-select2-id="computedName" :data-hide-search="hideSearch">
-                <option v-if="placeholder" value="">{{ placeholder }}</option>
-                <option v-for="item in options" :value="item.value">{{ item.title }}</option>
-            </select>
+        <select :disabled="disabled" :name="computedName" data-control="select2" :id="computedName" :data-placeholder="placeholder" :data-allow-clear="clearable"
+                class="form-select form-select-solid" :class="(form.errors?.[name]) ? 'is-invalid' : ''" :value="modelValue"
+                :data-dropdown-parent="modalId" :data-select2-id="computedName" :data-hide-search="hideSearch">
+            <option v-if="placeholder" value="">{{ placeholder }}</option>
+            <option v-for="item in options" :value="item.value">{{ item.title }}</option>
+        </select>
         <div :class="(form.errors?.[name]) ? 'invalid-feedback' : ''" v-if="form.errors?.[name]">{{ form.errors?.[name] }}</div>
     </div>
 </template>

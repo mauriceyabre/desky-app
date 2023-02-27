@@ -14,8 +14,13 @@
     import { router } from "@inertiajs/core";
     import SessionModal from "@Components/Modals/SessionModal.vue";
     import { useGlobalStore } from "@Stores/useGlobalStore";
+    import { useAuthStore } from "@Stores/useAuthStore";
 
     const global = useGlobalStore()
+    const authStore = useAuthStore()
+
+    authStore.load()
+
     const toaster = useToast();
 
     const toast = computed(() => {
@@ -45,8 +50,6 @@
 
     // STOP NAVIGATION IF TARGET IS THE SAME PAGE
     router.on('before', (e: CustomEvent) => {
-        console.log(e)
-
         const method = e.detail.visit.method;
 
         if (method === 'get') {

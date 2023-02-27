@@ -9,6 +9,8 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -127,6 +129,7 @@ Route::middleware('auth:web')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+require __DIR__ . '/axios.php';
 
 // DATABASE MIGRATION
 Route::prefix('db')->group(function () {
@@ -145,13 +148,13 @@ Route::get('/fic/fetch/clients', function () {
     $urlGetCompanies = 'https://api-v2.fattureincloud.it/user/companies';
     $url = "https://api-v2.fattureincloud.it/c/$companyId/entities/clients";
 
-    $file = file_get_contents(resource_path() . '/js/Helpers/Data/Clients.json');
+    $file = file_get_contents(resource_path() . '/ts/Helpers/Data/Clients.json');
     $data = json_decode($file, true)['data'];
 
-    print_r($file);
+    //print_r($file);
 
-    //    return Http::acceptJson()
-    //        ->withHeaders([
-    //            'Authorization' => 'Bearer ' . $token
-    //        ])->get($url, ['fieldset' => 'detailed', 'per_page' => 500])->json();
+        return Http::acceptJson()
+            ->withHeaders([
+                'Authorization' => 'Bearer ' . $token
+            ])->get($url, ['fieldset' => 'detailed', 'per_page' => 500])->json();
 });

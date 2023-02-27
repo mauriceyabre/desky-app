@@ -95,6 +95,7 @@
     const projectsStore = useProjectsStore();
     const customersStore = useCustomersStore();
     const membersStore = useMembersStore();
+    const customers = ''
 
     watchEffect(() => {
         nextTick(() => {

@@ -19,7 +19,7 @@ class ProjectController extends Controller {
 
     public function index() : Response {
         return Inertia::render('App/ProjectsIndex', [
-            'projects' => Project::uncompleted()->get(),
+            'projects' => Project::uncompleted()->with('customer:id,name', 'members:id,first_name,last_name')->get(),
             'phases' => Project::$PHASES,
             'members' => User::get(['id','first_name','last_name']),
             'page' => [
